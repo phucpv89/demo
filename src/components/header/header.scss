@@ -1,0 +1,11 @@
+@import '~zp-styles/common/_colors.scss';
+
+.header {
+  background-color: $white;
+  padding: 26px 12px 10px;
+  .header-text {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: -0.17pt;
+  }
+}

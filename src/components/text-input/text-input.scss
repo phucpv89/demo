@@ -1,0 +1,50 @@
+@import '~zp-styles/common/_colors.scss';
+.text-input {
+  min-height: 60px;
+  background-color: $white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  .floating-label {
+    position: absolute;
+    pointer-events: none;
+    left: 12px;
+    top: 21px;
+    transition: 0.2s ease all;
+    color: $disableButton;
+    font-size: 16px;
+    letter-spacing: -0.17px,
+  }
+  .input {
+    flex: 1;
+    padding: 20px 12px 0px;
+    color: $defaultText;
+    font-size: 16px;
+    letter-spacing: -0.17px;
+    border: 0px;
+    &:disabled {
+      opacity: 1;
+      -webkit-text-fill-color: $defaultText;
+      -text-fill-color: $defaultText;
+    }
+  }
+  .input--auto-expand {
+    padding: 30px 12px 12px;
+    &:focus {
+      outline: 0px solid transparent;
+    }
+  }
+}
+
+.text-input .input:focus ~ .floating-label,
+.text-input .input:not(:focus):valid ~ .floating-label,
+.text-input .input:disabled:not([value=""]) ~ .floating-label,
+.text-input .input--auto-expand:not(:empty) ~ .floating-label {
+  left: 12px;
+  top: 8px;
+  font-size: 12px;
+  letter-spacing: -0.13px;
+  color: $placeholder;
+}

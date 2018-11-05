@@ -1,0 +1,34 @@
+@import '~zp-styles/common/_colors.scss';
+
+.toast {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $transparent;
+  .toast__toast-content {
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.54);
+    border-radius: 8px;
+    min-width: 100px;
+    .icon-general_check {
+      font-size: 30px;
+      margin-bottom: 10px;
+      &:before {
+        color: $white;
+      }
+    }
+    .toast__toast-content__toast-msg {
+      font-size: 15px;
+      line-height: 20px;
+      color: $white;
+    }
+  }
+}

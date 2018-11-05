@@ -1,0 +1,21 @@
+@import '~zp-styles/common/_colors.scss';
+
+.full-width-btn {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-self: stretch;
+  justify-content: center;
+  align-items: center;
+  background-color: $zalo;
+  border-radius: 3px;
+  border: none;
+  span {
+    color: $white;
+    font-size: 18px;
+  }
+}
+
+.full-width-btn--disabled {
+  background-color: $disableButton;
+}
