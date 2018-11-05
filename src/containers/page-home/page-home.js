@@ -1,18 +1,14 @@
 import React, { PureComponent } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import injectReducer from '../../utils/inject-reducer';
 import './page-home.scss';
-import HomeActions, { reducer } from '../../reducers/home-reducer';
 import ZPTextInput from '../../components/text-input';
 import ZPButton from '../../components/full-width-button';
 import QueryString from 'query-string';
 import QRCode from 'qrcode.react';
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-// const { Card, CardTitle, CardText, CardActions, Button } = window.ReactMD;
-// import { FontIcon, TabsContainer, Tabs, Tab } from 'react-md';
-// import { Tabs, Tab, TabPanel, TabList } from 'react-re-super-tabs';
-import { TabsContainer, Tabs, Tab, BottomNavigation } from 'react-md';
+
+import { TabBar } from 'antd-mobile';
+
+import 'antd-mobile/dist/antd-mobile.css';
+
 const ZaloPayApi = window.ZaloPay;
 
 const CREATE_ORDER = 'https://devbus.zalopay.com.vn/api/v1/create_order';
@@ -132,192 +128,119 @@ class PageHome extends PureComponent {
       amount: event.target.value
     });
   };
-  // render() {
-  //   return (
-  //     <div className="md-grid">
-  //       <Card className="md-cell">
-  //         <CardTitle title="Hello, World!" />
-  //         <CardText>Lorem ipsum... pretend more ...</CardText>
-  //         <CardActions>
-  //           <Button flat label="Action 1" />
-  //           <Button flat label="Action 2" />
-  //         </CardActions>
-  //       </Card>
-  //     </div>
-  //   );
-  // }
-
-  // render() {
-  //   const { indentifier, amount } = this.state;
-  //   return (
-  //     <div className="home-page">
-  //       <img
-  //         src={require('../../assets/bghome.jpg')}
-  //         width="100%"
-  //         alt="banner"
-  //       />
-  //       <Card className="md-cell">
-  //         <CardTitle title="Hello, World!" />
-  //       </Card>
-  //       <QRCode value="http://facebook.github.io/react/" />
-  //       <div className="text-input-wrapper">
-  //         <ZPTextInput
-  //           placeholder={IDENTIFIER_TITLE}
-  //           className="cmnd-text-input"
-  //           onChange={this.handleIdentifierChange}
-  //         />
-  //         <ZPTextInput
-  //           placeholder={AMOUNT_TITLE}
-  //           onChange={this.handleAmountChange}
-  //           type="number"
-  //         />
-  //       </div>
-  //       <div className="pay-button-wrapper">
-  //         <ZPButton
-  //           text="Thanh toán"
-  //           onClick={this.createOrder}
-  //           // disabled={!indentifier || !amount}
-  //         />
-  //       </div>
-  //     </div>
-  //   );
-  // }
-  // render() {
-  //   return (
-  //     <div className="home-page">
-  //       {/* <div className="tabs-container" /> */}
-  //       {/* <TabsContainer
-  //         className="tabs-container"
-  //         panelClassName="md-grid"
-  //         colored
-  //         fixed
-  //         themed
-  //         labelAndIcon
-  //       >
-  //         <Tabs
-  //           tabId="simple-tab"
-  //           mobile={true}
-  //           className="tabs-container-tabs"
-  //         >
-  //           <Tab label="Tab one" className="tabs-container-tabs-tab">
-  //             <h3>Hello, World!</h3>
-  //           </Tab>
-  //           <Tab label="Tab two" className="tabs-container-tabs-tab">
-  //             <h3>Now look at me!</h3>
-  //           </Tab>
-  //         </Tabs>
-  //       </TabsContainer> */}
-  //       <TabsContainer panelClassName="md-grid" colored>
-  //         <Tabs tabId="simple-tab" mobile={true}>
-  //           <Tab label="Tab one">
-  //             <h3>Hello, World!</h3>
-  //           </Tab>
-  //           <Tab label="Tab two">
-  //             <h3>Now look at me!</h3>
-  //           </Tab>
-  //         </Tabs>
-  //       </TabsContainer>
-  //     </div>
-  //   );
-  // }
-  render() {
+  renderContent(pageText) {
     return (
-      <div className="home-page">
-        <TabsContainer
-          style={{
-            width: '100%',
-            flexDirection: 'row'
-            // background: 'blue'
-          }}
-          // panelClassName="md-grid"
-          panelClassName="md-bottom-navigation-offset"
-          colored
-          mobile={true}
+      <div
+        style={{
+          backgroundColor: 'white',
+          height: 1000,
+          textAlign: 'center'
+          // flex: 1
+        }}
+      >
+        <div style={{ paddingTop: 60 }}>
+          Clicked “{pageText}” tab， show “{pageText}” information
+        </div>
+      </div>
+    );
+  }
+  render() {
+    const { indentifier, amount } = this.state;
+    return (
+      <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+        <TabBar
+          unselectedTintColor="#949494"
+          tintColor="#33A3F4"
+          barTintColor="white"
+          hidden={this.state.hidden}
+          style={{ display: 'flex', flexDirection: 'column' }}
         >
-          <Tabs tabId="simple-tab" mobile={true}>
-            <Tab label="Thanh toán" className="tab-label">
-              <div>
-                <img
-                  src={require('../../assets/bghome.jpg')}
-                  width="100%"
-                  alt="banner"
-                />
-                <div className="text-input-wrapper">
-                  <ZPTextInput
-                    placeholder={IDENTIFIER_TITLE}
-                    className="cmnd-text-input"
-                    onChange={this.handleIdentifierChange}
-                  />
-                  <ZPTextInput
-                    placeholder={AMOUNT_TITLE}
-                    onChange={this.handleAmountChange}
-                    type="number"
-                  />
-                </div>
-                <div className="pay-button-wrapper">
-                  <ZPButton
-                    text="Thanh toán"
-                    onClick={this.createOrder}
-                    // disabled={!indentifier || !amount}
-                  />
-                </div>
+          <TabBar.Item
+            title="QR"
+            key="qr"
+            selected={this.state.selectedTab === 'blueTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'blueTab'
+              });
+            }}
+            data-seed="logId"
+            icon={
+              <Icon
+                url={`https://upload.wikimedia.org/wikipedia/commons/3/31/QR_icon.svg`}
+              />
+            }
+            selectedIcon={
+              <Icon
+                url={`https://upload.wikimedia.org/wikipedia/commons/3/31/QR_icon.svg`}
+              />
+            }
+          >
+            <div className="tab-qr">
+              <div className="tab-qr-qrcode">
+                <QRCode value="http://facebook.github.io/react/" size={280} />
               </div>
-            </Tab>
-            <Tab label="Mã QR" className="tab-label">
-              <div className="tab-qr">
-                <div className="tab-qr-qrcode">
-                  <QRCode value="http://facebook.github.io/react/" size={280} />
-                </div>
-              </div>
-            </Tab>
-          </Tabs>
-        </TabsContainer>
+            </div>
+          </TabBar.Item>
+          <TabBar.Item
+            icon={
+              <Icon
+                url={`https://www.svgrepo.com/show/125026/debit-card.svg`}
+              />
+            }
+            selectedIcon={
+              <Icon
+                url={`https://www.svgrepo.com/show/125026/debit-card.svg`}
+              />
+            }
+            title="Thanh Toán"
+            key="pay"
+            selected={this.state.selectedTab === 'redTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'redTab'
+              });
+            }}
+            data-seed="logId1"
+          >
+            <img
+              src={require('../../assets/bghome.jpg')}
+              width="100%"
+              alt="banner"
+            />
+            <div className="text-input-wrapper">
+              <ZPTextInput
+                placeholder={IDENTIFIER_TITLE}
+                className="cmnd-text-input"
+                onChange={this.handleIdentifierChange}
+              />
+              <ZPTextInput
+                placeholder={AMOUNT_TITLE}
+                onChange={this.handleAmountChange}
+                type="number"
+              />
+            </div>
+            <div className="pay-button-wrapper">
+              <ZPButton
+                text="Thanh toán"
+                onClick={this.createOrder}
+                disabled={!indentifier || !amount}
+              />
+            </div>
+          </TabBar.Item>
+        </TabBar>
       </div>
     );
   }
 }
-
-const mapStateToProps = ({ home }) => ({
-  testHome: home.testHome
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  {
-    setTestHome: HomeActions.setTestHome,
-    asyncFunc: HomeActions.asyncFunc,
-    saveHome: HomeActions.saveHome
-  }
-);
-
-const withReducer = injectReducer({ key: 'home', reducer });
-
-// export default compose(
-//   withReducer,
-//   withConnect
-// )(PageHome);
-const style = {
-  padding: '10px 0',
-  borderBottom: '3px solid transparent',
-  display: 'inline-block',
-  cursor: 'pointer',
-  backgroundColor: '#1c90ec',
-  width: '33.3%',
-  color: 'rgba(255, 255, 255, .7)',
-  textAlign: 'center'
-};
-
-const activeStyle = {
-  ...style,
-  color: 'white',
-  borderBottom: '3px solid #d71356'
-};
-
-const CustomTab = ({ children, isActive }) => (
-  <span style={isActive ? activeStyle : style}>{children}</span>
-);
-const Info = () => (
-  <div style={{ backgroundColor: '#1c90ec', width: '100%', flex: 1 }} />
+const Icon = ({ url }) => (
+  <div
+    style={{
+      width: '22px',
+      height: '22px',
+      background: `url(${url}) center center /  21px 21px no-repeat`
+    }}
+  />
 );
 
 export default PageHome;
